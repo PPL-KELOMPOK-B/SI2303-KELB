@@ -199,12 +199,12 @@
 
         .box {
             background: white;
-            padding: 20px;
+            padding: 50px;
             border-radius: 10px;
         }
 
          .chart-box {
-            width: 1073px;
+            width: 1015px;
             height: 200px;
         }
 
@@ -250,6 +250,16 @@
             font-size: 12px;
         }
 
+        .chart-wrapper {
+            flex: 1;             /* 🔥 ini kunci utama */
+            position: relative;
+        }
+
+        .chart-wrapper canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
         .menunggu { background: blue; }
         .proses { background: orange; }
         .selesai { background: green; }
@@ -397,22 +407,37 @@
 </div>
 
 <!-- Chart Script -->
+        <div class="box">
+            <h4>Distribusi Status Laporan</h4>
 
-<script>
-new Chart(document.getElementById('chart'), {
-    type: 'bar',
-    data: {
-        labels: ['Menunggu','Proses','Selesai'],
-        datasets: [{
-            data: [{{ $menunggu }},{{ $proses }},{{ $selesai }}]
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
-    }
-});
-</script>
+            <div class="chart-wrapper">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
 
+        <script>
+        new Chart(document.getElementById('chart'), {
+            type: 'bar',
+            data: {
+                labels: ['Menunggu','Proses','Selesai'],
+                datasets: [{
+                    label: 'Jumlah',
+                    data: [{{ $menunggu }}, {{ $proses }}, {{ $selesai }}]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: 10
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        </script>
 </body>
 </html>
